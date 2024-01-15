@@ -1,0 +1,47 @@
+# Node.js
+node_modules/
+server/node_modules/
+npm-debug.log
+yarn-error.log
+
+# Vite
+/dist/
+/.vite/
+
+# IDE/Editor
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Logs
+logs
+*.log
+
+# Build output
+/build/
+
+# Dependency directories
+/.pnp/
+.pnp.js
+
+# Testing
+/coverage/
+
+# Environment variables
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Misc
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env*.local
+.env*.local.js
+.env*.local.json
+.env*.local.yaml
+.env*.local.yml
