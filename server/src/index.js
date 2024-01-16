@@ -1,19 +1,21 @@
 import express from "express";
 import dotenv from "dotenv";
 import connectDB from "./db/connection.js";
-import userRoutes from "./routes/userRoutes.js";
 import cors from "cors";
-
-const app = express();
-
-dotenv.config({ path: "./env" });
-
-app.use(cors());
-
-app.use("/api/auth", userRoutes);
+import router from "./routes/userRoutes.js";
 
 connectDB();
 
-app.listen(process.env.PORT, () => {
+const app = express();
+dotenv.config({ path: "./env" });
+
+// middlewares
+app.use(express.json());
+app.use(cors());
+
+// Routes
+app.use("/api/users", router);
+
+app.listen(process.env.PORT || 3000, () => {
   console.log("server listening on port", process.env.PORT);
 });

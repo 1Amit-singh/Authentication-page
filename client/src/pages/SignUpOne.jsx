@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { ArrowRight } from "lucide-react";
 import { Outlet, Link, useNavigate } from "react-router-dom";
-import { registerRoute } from "../../ApiRoutes.js";
 import axios from "axios";
 
 export function SignUpOne() {
@@ -14,15 +13,12 @@ export function SignUpOne() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const { fullName, email, password } = values;
+    // const { fullName, email, password } = values;
     axios
-      .post(registerRoute, {
-        fullName,
-        email,
-        password,
-      })
+      .post("http://localhost:3000/api/users/register", values)
       .then((response) => {
-        console.log(response.data);
+        console.log(response.status);
+        navigate("/");
       })
       .catch((error) => {
         console.error("Error making registration request:", error);
