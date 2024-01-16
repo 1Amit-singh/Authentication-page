@@ -1,8 +1,40 @@
-import React from "react";
+import React, { useState } from "react";
 import { ArrowRight } from "lucide-react";
-import { Outlet, Link } from "react-router-dom";
+import { Outlet, Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export function SignInOne() {
+  const navigate = useNavigate();
+  const [values, setValues] = useState({
+    email: "",
+    password: "",
+  });
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    // console.log(values);
+    // const { email, password } = values;
+    axios
+      .post("http://localhost:3000/api/users/login", values)
+      .then((response) => {
+        console.log(response.status);
+        if (response.status >= 200 && response.status < 300) {
+          navigate("/");
+        }
+      })
+      .catch((error) => {
+        console.error("Error While Login:", error);
+        // if (error.response) {
+        //   console.error("Response data:", error.response.data);
+        //   console.error("Response status:", error.response.status);
+        // }
+      });
+  };
+
+  const handleChange = (e) => {
+    setValues({ ...values, [e.target.name]: e.target.value });
+  };
+
   return (
     <section>
       <div className="grid grid-cols-1 lg:grid-cols-2">
@@ -116,7 +148,11 @@ export function SignInOne() {
                 <Link to="/signup">Create a free account</Link>
               </div>
             </p>
-            <form action="#" method="POST" className="mt-8">
+            <form
+              onSubmit={(event) => handleSubmit(event)}
+              method="POST"
+              className="mt-8"
+            >
               <div className="space-y-5">
                 <div>
                   <label
@@ -131,6 +167,8 @@ export function SignInOne() {
                       className="flex h-10 w-full rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                       type="email"
                       placeholder="Email"
+                      name="email"
+                      onChange={(e) => handleChange(e)}
                     ></input>
                   </div>
                 </div>
@@ -157,12 +195,14 @@ export function SignInOne() {
                       className="flex h-10 w-full rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                       type="password"
                       placeholder="Password"
+                      name="password"
+                      onChange={(e) => handleChange(e)}
                     ></input>
                   </div>
                 </div>
                 <div>
                   <button
-                    type="button"
+                    type="submit"
                     className="inline-flex w-full items-center justify-center rounded-md bg-black px-3.5 py-2.5 font-semibold leading-7 text-white hover:bg-black/80"
                   >
                     Get started <ArrowRight className="ml-2" size={16} />

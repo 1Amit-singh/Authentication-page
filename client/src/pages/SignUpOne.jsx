@@ -17,15 +17,16 @@ export function SignUpOne() {
     axios
       .post("http://localhost:3000/api/users/register", values)
       .then((response) => {
-        console.log(response.status);
-        navigate("/");
+        if (response.status >= 200 && response.status < 300) {
+          navigate("/");
+        }
       })
       .catch((error) => {
         console.error("Error making registration request:", error);
-        if (error.response) {
-          console.error("Response data:", error.response.data);
-          console.error("Response status:", error.response.status);
-        }
+        // if (error.response) {
+        //   console.error("Response data:", error.response.data);
+        //   console.error("Response status:", error.response.status);
+        // }
       });
   };
 
